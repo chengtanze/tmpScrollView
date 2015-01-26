@@ -15,6 +15,8 @@ typedef enum
     enum_Right
 }enum_Direction_ScrollView;
 
+#define POST_TIMER_SCROLLPIC 5.0
+
 @interface ListTableViewController ()
 {
     UIScrollView * scrollview;
@@ -41,9 +43,11 @@ typedef enum
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    maxPicCount = 2;
+    maxPicCount = 7;
     currIndex = 0;
     direction = enum_UnKnow;
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -90,6 +94,19 @@ typedef enum
     
     // 实现循环切换图片，创建3个imageview即可。每次翻页的时候清除之前scrollview中的图片，重新加载资源
     [self upDataScrollViewPoint:currIndex];
+    
+    //创建一个定时器，定时滚动
+    NSTimer* connectionTimer=[NSTimer scheduledTimerWithTimeInterval:POST_TIMER_SCROLLPIC target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    [connectionTimer fire];
+}
+
+-(void)timerFired:(NSTimer *)timer{
+    direction = enum_Right;
+    NSLog(@"direction:[%d]", direction);
+    
+    currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
+    [self upDataScrollViewPoint:currIndex];
+
 }
 
 -(void)upDataScrollViewPoint:(NSInteger)index
@@ -99,15 +116,6 @@ typedef enum
     CGPoint point = scrollview.contentOffset;
     point.x = MainScreenSize.width;
     scrollview.contentOffset = point;
-    
-//    if (maxPicCount >= 3) {
-//        point.x = MainScreenSize.width;
-//        scrollview.contentOffset = point;
-//    }else{
-//        point.x = 0;
-//        scrollview.contentOffset = point;
-//    }
-
     
 }
 
