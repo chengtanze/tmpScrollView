@@ -1,12 +1,12 @@
 //
-//  ListTableViewController.m
+//  Custom_ScrollImageView.m
 //  tmpScrollView
 //
-//  Created by wangsl-iMac on 15/1/26.
+//  Created by chengtz-iMac on 15/1/29.
 //  Copyright (c) 2015年 chengtz-iMac. All rights reserved.
 //
 
-#import "ListTableViewController.h"
+#import "Custom_ScrollImageView.h"
 
 typedef enum
 {
@@ -17,52 +17,37 @@ typedef enum
 
 #define POST_TIMER_SCROLLPIC 5.0
 
-
-#include "Custom_ScrollImageView.h"
-@interface ListTableViewController ()
+@interface Custom_ScrollImageView ()
 {
     UIScrollView * scrollview;
     UIPageControl * pageControl;
     CGSize MainScreenSize;
-    
-    NSInteger maxPicCount;
+
     NSInteger currIndex;
     
     NSMutableArray * picViewArray;
     NSMutableArray * imageViewArray;
     
     enum_Direction_ScrollView direction;
-    
-    Custom_ScrollImageView * srcollImage;
 }
 @end
 
-@implementation ListTableViewController
+@implementation Custom_ScrollImageView
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-//    maxPicCount = 5;
-//    currIndex = 0;
-//    direction = enum_UnKnow;
-    
-//    srcollImage = [[Custom_ScrollImageView alloc]initWithFrame:self.cellForScrollView.frame];
-//    [self.cellForScrollView addSubview:srcollImage];
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        
+        _maxPicCount = 5;
+        currIndex = 0;
+        direction = enum_UnKnow;
+        
+        [self initSubView];
+    }
+    return self;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    srcollImage = [[Custom_ScrollImageView alloc]initWithFrame:self.cellForScrollView.frame];
-    [self.cellForScrollView addSubview:srcollImage];
-    [srcollImage upDataScrollViewPoint];
-    return;
-    
-    MainScreenSize = self.cellForScrollView.bounds.size;//[UIScreen mainScreen].bounds.size;
+-(void)initSubView{
+    MainScreenSize = self.bounds.size;//self.cellForScrollView.bounds.size;
     
     //NSLog(@"MainScreenSize width:%f, height:%f", MainScreenSize.width, MainScreenSize.height);
     scrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, MainScreenSize.width, MainScreenSize.height)];
@@ -74,20 +59,21 @@ typedef enum
     //翻页效果
     scrollview.pagingEnabled = YES;
     
-    for (int nIndex = 0; nIndex < maxPicCount; nIndex++) {
+    for (int nIndex = 0; nIndex < _maxPicCount; nIndex++) {
         NSString *str = [NSString stringWithFormat:@"%d.JPG", nIndex + 1];
         UIImage * image = [UIImage imageNamed:str];
         
         [picViewArray addObject:image];
     }
-
+    
     //由于最小都要创建3个ImageView 所以当显示的图片小于3时 还是按3个创建
     NSInteger picCount;
-    maxPicCount == 2 ? picCount = 3 : (picCount = maxPicCount);
+    _maxPicCount == 2 ? picCount = 3 : (picCount = _maxPicCount);
     //要实现scrollview的滚动需要2个条件：1设置每个子view的坐标 2 设置contentsize
     
     scrollview.contentSize =  CGSizeMake(MainScreenSize.width * picCount, MainScreenSize.height);
-    [self.cellForScrollView addSubview:scrollview];
+//[self.cellForScrollView addSubview:scrollview];
+    [self addSubview:scrollview];
     
     
     pageControl = [[UIPageControl alloc] init];
@@ -96,18 +82,19 @@ typedef enum
     //pageControl.backgroundColor = [UIColor whiteColor];
     pageControl.pageIndicatorTintColor = [UIColor redColor];
     pageControl.currentPageIndicatorTintColor = [UIColor greenColor];
-    pageControl.numberOfPages = maxPicCount;//指定页面个数
+    pageControl.numberOfPages = _maxPicCount;//指定页面个数
     pageControl.currentPage = 0;//指定pagecontroll的值，默认选中的小白点（第一个）
-    [self.cellForScrollView addSubview:pageControl];
-    
+//[self.cellForScrollView addSubview:pageControl];
+    [self addSubview:pageControl];
     
     // 实现循环切换图片，创建3个imageview即可。每次翻页的时候清除之前scrollview中的图片，重新加载资源
-    [self upDataScrollViewPoint:currIndex];
+//[self upDataScrollViewPoint:currIndex];
     
     //创建一个定时器，定时滚动
     //NSTimer* connectionTimer=[NSTimer scheduledTimerWithTimeInterval:POST_TIMER_SCROLLPIC target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     //[connectionTimer fire];
 }
+
 
 -(void)timerFired:(NSTimer *)timer{
     direction = enum_Right;
@@ -115,7 +102,11 @@ typedef enum
     
     currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
     [self upDataScrollViewPoint:currIndex];
+    
+}
 
+-(void)upDataScrollViewPoint{
+    [self upDataScrollViewPoint:currIndex];
 }
 
 -(void)upDataScrollViewPoint:(NSInteger)index
@@ -147,7 +138,7 @@ typedef enum
     NSInteger pre = [self adjustCurrentIndex:currIndex - 1];
     NSInteger next ;//= pre;//[self adjustCurrentIndex:currIndex + 1];
     
-    if (maxPicCount == 2)
+    if (_maxPicCount == 2)
         next = pre;
     else
         next = [self adjustCurrentIndex:currIndex + 1];
@@ -196,14 +187,14 @@ typedef enum
 {
     NSInteger adjustIndex = index;
     
-    if (index >= maxPicCount) {
+    if (index >= _maxPicCount) {
         adjustIndex = 0;
     }
     else if(index < 0)
     {
-        adjustIndex = maxPicCount - 1;
+        adjustIndex = _maxPicCount - 1;
     }
-
+    
     return adjustIndex;
 }
 
@@ -213,92 +204,29 @@ typedef enum
     NSInteger x = scrollview.contentOffset.x;
     
     CGFloat widthPageCondition = MainScreenSize.width * 2;
-
-//    if (x >= widthPageCondition) {
-//        direction = enum_Right;
-//        NSLog(@"direction:[%d]", direction);
-//        
-//        currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
-//        [self upDataScrollViewPoint:currIndex];
-//    }
-//    else if (x <= 0) {
-//        direction = enum_Left;
-//        NSLog(@"direction:[%d]", direction);
-//        currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
-//        [self upDataScrollViewPoint:currIndex];
-//    }
+    
+    if (x >= widthPageCondition) {
+        direction = enum_Right;
+        NSLog(@"direction:[%d]", direction);
+        
+        currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
+        [self upDataScrollViewPoint:currIndex];
+    }
+    else if (x <= 0) {
+        direction = enum_Left;
+        NSLog(@"direction:[%d]", direction);
+        currIndex = [self adjustCurrentIndex:[self upDataCurrent:currIndex]];
+        [self upDataScrollViewPoint:currIndex];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 2;
-}
-
-
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-//    
-//    // Configure the cell...
-//    
-//    return nil;
-//}
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
 }
 */
 

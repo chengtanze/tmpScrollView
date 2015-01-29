@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C85B7370-41DF-4286-8941-C5C6732CBACE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>tmpScrollView</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CB2E9F814359F208075219C71CD17E499233DF88</key>
+		<string>https://github.com/chengtanze/tmpScrollView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>tmpScrollView.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CB2E9F814359F208075219C71CD17E499233DF88</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/chengtanze/tmpScrollView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CB2E9F814359F208075219C71CD17E499233DF88</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CB2E9F814359F208075219C71CD17E499233DF88</string>
+			<key>IDESourceControlWCCName</key>
+			<string>tmpScrollView</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC81BC7E1A79DFD400D6C78F /* Custom_ScrollImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC81BC7D1A79DFD400D6C78F /* Custom_ScrollImageView.m */; };
 		FCBCD57A1A75CE940003E404 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBCD5791A75CE940003E404 /* main.m */; };
 		FCBCD57D1A75CE940003E404 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBCD57C1A75CE940003E404 /* AppDelegate.m */; };
 		FCBCD5801A75CE940003E404 /* tmpScrollView.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCBCD57E1A75CE940003E404 /* tmpScrollView.xcdatamodeld */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC81BC7C1A79DFD400D6C78F /* Custom_ScrollImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_ScrollImageView.h; sourceTree = "<group>"; };
+		FC81BC7D1A79DFD400D6C78F /* Custom_ScrollImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_ScrollImageView.m; sourceTree = "<group>"; };
 		FCBCD5741A75CE940003E404 /* tmpScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tmpScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBCD5781A75CE940003E404 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCBCD5791A75CE940003E404 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -82,6 +85,8 @@
 		FCBCD56B1A75CE940003E404 = {
 			isa = PBXGroup;
 			children = (
+				FC81BC7C1A79DFD400D6C78F /* Custom_ScrollImageView.h */,
+				FC81BC7D1A79DFD400D6C78F /* Custom_ScrollImageView.m */,
 				FCBCD5A01A75D1A80003E404 /* ListTableViewController.h */,
 				FCBCD5A11A75D1A80003E404 /* ListTableViewController.m */,
 				FCBCD5761A75CE940003E404 /* tmpScrollView */,
@@ -259,6 +264,7 @@
 				FCBCD57A1A75CE940003E404 /* main.m in Sources */,
 				FCBCD5831A75CE940003E404 /* ViewController.m in Sources */,
 				FCBCD5801A75CE940003E404 /* tmpScrollView.xcdatamodeld in Sources */,
+				FC81BC7E1A79DFD400D6C78F /* Custom_ScrollImageView.m in Sources */,
 				FCBCD5A21A75D1A80003E404 /* ListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -452,6 +458,7 @@
 				FCBCD59C1A75CE950003E404 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FCBCD59D1A75CE950003E404 /* Build configuration list for PBXNativeTarget "tmpScrollViewTests" */ = {
 			isa = XCConfigurationList;
@@ -460,6 +467,7 @@
 				FCBCD59F1A75CE950003E404 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
